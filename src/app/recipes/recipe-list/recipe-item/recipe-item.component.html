@@ -1,4 +1,5 @@
-<a style="cursor: pointer" class="list-group-item clearfix" (click)="onSelect(recipe)">
+<a style="cursor: pointer" class="list-group-item clearfix"
+   [routerLink]="[index]" routerLinkActive="active">
       <span class="pull-right">
         <img
           [src]=recipe.imageUrl
