@@ -1,6 +1,7 @@
-import {ChangeDetectionStrategy, Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Ingredient} from "../../shared/ingredient.model";
 import {ShoppingListService} from "../shopping-list.service";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-shopping-edit',
@@ -9,8 +10,7 @@ import {ShoppingListService} from "../shopping-list.service";
 })
 export class ShoppingEditComponent {
 
-  @ViewChild('nameInput') nameInput: ElementRef;
-  @ViewChild('amountInput') amountInput: ElementRef;
+  @ViewChild('f') ingredientForm: NgForm;
 
   constructor(private shoppingListService: ShoppingListService) {
   }
@@ -18,12 +18,11 @@ export class ShoppingEditComponent {
   onAddIngredient() {
     this.shoppingListService.addIngredient(
       new Ingredient(
-        this.nameInput.nativeElement.value,
-        this.amountInput.nativeElement.value
+        this.ingredientForm.value.name,
+        this.ingredientForm.value.amount
       )
     );
 
-    this.nameInput.nativeElement.value = '';
-    this.amountInput.nativeElement.value = '';
+    this.ingredientForm.reset();
   }
 }
