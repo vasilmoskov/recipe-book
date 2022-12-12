@@ -12,8 +12,13 @@
       </div>
 
       <div>
-        <button class="btn btn-primary">Sign up</button> |
-        <button class="btn btn-primary">Sign in</button>
+        <button type="submit" class="btn btn-primary">
+          {{ inLoginMode ? 'Login' : 'Register' }}
+        </button>
+        |
+        <button type="button" class="btn btn-primary" (click)="onSwitchMode()">
+          Switch to {{ inLoginMode ? 'Register' : 'Login' }}
+        </button>
       </div>
     </form>
   </div>
