@@ -34,6 +34,10 @@
           Switch to {{ inLoginMode ? 'Register' : 'Login' }}
         </button>
       </div>
+
+      <div *ngIf="isLoading" style="text-align: center">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
     </form>
   </div>
 </div>
