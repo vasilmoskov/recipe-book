@@ -17,9 +17,7 @@ export class AuthComponent implements OnDestroy {
   @ViewChild(PlaceholderDirective) alertHost: PlaceholderDirective;  // finds the first occurrence of PlaceholderDirective
   closeSub: Subscription;
 
-  constructor(private authService: AuthService,
-              private router: Router,
-              private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   onSwitchMode() {
@@ -70,10 +68,10 @@ export class AuthComponent implements OnDestroy {
   }
 
   private showErrorAlert(errorMessage: string) {
-    const alertComponentFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
     const hostViewContainerRef = this.alertHost.viewContainerRef;
     hostViewContainerRef.clear();
-    const component = hostViewContainerRef.createComponent(alertComponentFactory);
+
+    const component = hostViewContainerRef.createComponent(AlertComponent);
 
     component.instance.message = errorMessage;
     this.closeSub = component.instance.close.subscribe(() => {

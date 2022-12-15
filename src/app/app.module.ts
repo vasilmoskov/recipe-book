@@ -58,8 +58,8 @@ import {PlaceholderDirective} from "./shared/placeholder/placeholder.directive";
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ // It's not necessary to add entryComponents for Angular9+
-    AlertComponent
-  ]
+  // entryComponents: [ // It's not necessary to add entryComponents for Angular9+
+  //   AlertComponent
+  // ]
 })
 export class AppModule { }
