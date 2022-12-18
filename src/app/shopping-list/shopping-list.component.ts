@@ -1,16 +1,13 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges
 } from '@angular/core';
 import {Ingredient} from "../shared/ingredient.model";
 import {ShoppingListService} from "./shopping-list.service";
-import {Observable, Subscription} from "rxjs";
+import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
+import * as fromShoppingList from "./store/shopping-list.reducer"
 
 @Component({
   selector: 'app-shopping-list',
@@ -22,7 +19,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   // ingredientsChangedSubscription: Subscription
 
   constructor(private shoppingListService: ShoppingListService,
-              private store: Store<{ shoppingList: { ingredients: Ingredient[] } }>) {
+              private store: Store<fromShoppingList.AppState>) {
   }
 
   ngOnInit(): void {
