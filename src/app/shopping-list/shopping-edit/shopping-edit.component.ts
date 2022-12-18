@@ -15,7 +15,7 @@ import * as fromShoppingList from "../store/shopping-list.reducer";
 export class ShoppingEditComponent implements OnInit, OnDestroy {
   editMode = false;
   editSubscription: Subscription;
-  editedIngredientIndex: number;
+  // editedIngredientIndex: number;
   editedIngredient: Ingredient;
 
   @ViewChild('f') ingredientForm: NgForm;
@@ -29,7 +29,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       if (state.editedIngredientIndex !== -1) {
         this.editMode = true;
         this.editedIngredient = state.editedIngredient;
-        this.editedIngredientIndex = state.editedIngredientIndex;
+        // this.editedIngredientIndex = state.editedIngredientIndex;
 
         this.ingredientForm.setValue({
           'name': this.editedIngredient.name,
@@ -61,10 +61,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
     if (this.editMode) {
       // this.shoppingListService.editIngredient(this.editedIngredientIndex, ingredient);
-      this.store.dispatch(new ShoppingListActions.EditIngredient({
-          index: this.editedIngredientIndex,
-          ingredient
-        })
+      this.store.dispatch(new ShoppingListActions.EditIngredient(ingredient)
       );
     } else {
       // this.shoppingListService.addIngredient(ingredient);
@@ -88,7 +85,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   onDelete() {
     // this.shoppingListService.deleteIngredient(this.editedIngredientIndex);
-    this.store.dispatch(new ShoppingListActions.DeleteIngredient(this.editedIngredientIndex));
+    this.store.dispatch(new ShoppingListActions.DeleteIngredient());
     this.onClear();
   }
 }
