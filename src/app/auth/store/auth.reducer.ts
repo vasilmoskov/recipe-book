@@ -4,14 +4,25 @@ import * as AuthActions from "./auth.actions";
 
 export interface State {
   user: User;
+  isLoading: boolean
+  authError: string
 }
 
 const initialState: State = {
-  user: null
+  user: null,
+  isLoading: false,
+  authError: null
 }
 
 export function authReducer(state = initialState, action: AuthActions.AuthActions) {
   switch (action.type) {
+    case AuthActions.LOGIN_START:
+      return {
+        ...state,
+        isLoading: true,
+        authError: null
+      }
+
     case AuthActions.LOGIN:
       const user = new User(
         action.payload.email,
@@ -22,8 +33,18 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
 
       return {
         ...state,
+        isLoading: false,
+        authError: null,
         user: user
       };
+
+    case AuthActions.LOGIN_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        user: null,
+        authError: action.payload
+      }
 
     case AuthActions.LOGOUT:
       return {
