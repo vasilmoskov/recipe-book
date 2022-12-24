@@ -8,6 +8,7 @@ import * as AuthActions from "./auth.actions";
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {User} from "../user.model";
+import {AuthService} from "../auth.service";
 
 export interface AuthResponseData {
   idToken: string,
@@ -67,6 +68,9 @@ export class AuthEffects {
             }
           )
           .pipe(
+            tap(respData => {
+              this.authService.setLogoutTimer(+respData.expiresIn * 1000)
+            }),
             map(respData => {
                 return handleAuthenticate(respData.email, respData.localId, respData.idToken, +respData.expiresIn);
               }
@@ -80,7 +84,7 @@ export class AuthEffects {
   );
 
   authRedirect = createEffect(() => this.actions$.pipe(
-      ofType(AuthActions.AUTH_SUCCESS, AuthActions.LOGOUT),
+      ofType(AuthActions.AUTH_SUCCESS),
       tap(() => {
         this.router.navigate(['/'])
       })
@@ -91,7 +95,9 @@ export class AuthEffects {
   authLogout = createEffect(() => this.actions$.pipe(
       ofType(AuthActions.LOGOUT),
       tap(() => {
+        this.authService.clearLogoutTimer();
         localStorage.removeItem('userData');
+        this.router.navigate(['/auth'])
       }),
     ),
     {dispatch: false}
@@ -110,6 +116,9 @@ export class AuthEffects {
               }
             )
             .pipe(
+              tap(respData => {
+                this.authService.setLogoutTimer(+respData.expiresIn * 1000)
+              }),
               map(respData => {
                 return handleAuthenticate(respData.email, respData.localId, respData.idToken, +respData.expiresIn);
               }),
@@ -140,19 +149,25 @@ export class AuthEffects {
 
       if (loadedUser.token) {
         // this.user.next(loadedUser);
+
+        const expirationTime = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+        this.authService.setLogoutTimer(expirationTime);
+
         return new AuthActions.AuthSuccess({
           email: loadedUser.email,
           id: loadedUser.id,
           token: loadedUser.token,
           tokenExpirationDate: new Date(userData._tokenExpirationDate)
         })
-        // this.autoLogout(new Date(userData._tokenExpirationDate).getTime() - new Date().getTime());
       }
 
       return {type: 'Dummy'}
     })
   ))
 
-  constructor(private actions$: Actions, private http: HttpClient, private router: Router) {
+  constructor(private actions$: Actions,
+              private http: HttpClient,
+              private router: Router,
+              private authService: AuthService) {
   }
 }
