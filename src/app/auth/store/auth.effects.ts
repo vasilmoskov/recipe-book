@@ -122,6 +122,37 @@ export class AuthEffects {
     )
   );
 
+  autoLogin = createEffect(() => this.actions$.pipe(
+    ofType(AuthActions.AUTO_LOGIN),
+    map(() => {
+      const userData: {
+        email: string,
+        id: string,
+        _token: string,
+        _tokenExpirationDate: Date
+      } = JSON.parse(localStorage.getItem('userData'));
+
+      if (!userData) {
+        return {type: 'Dummy'}
+      }
+
+      const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
+
+      if (loadedUser.token) {
+        // this.user.next(loadedUser);
+        return new AuthActions.AuthSuccess({
+          email: loadedUser.email,
+          id: loadedUser.id,
+          token: loadedUser.token,
+          tokenExpirationDate: new Date(userData._tokenExpirationDate)
+        })
+        // this.autoLogout(new Date(userData._tokenExpirationDate).getTime() - new Date().getTime());
+      }
+
+      return {type: 'Dummy'}
+    })
+  ))
+
   constructor(private actions$: Actions, private http: HttpClient, private router: Router) {
   }
 }
