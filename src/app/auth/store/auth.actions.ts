@@ -5,6 +5,7 @@ export const REGISTER_START = '[Auth] Register Start';
 export const AUTH_SUCCESS = '[Auth] Success';
 export const AUTH_FAIL = '[Auth] Fail';
 export const LOGOUT = '[Auth] Logout';
+export const CLEAR_ERROR = '[Auth] Clear error';
 
 export class AuthSuccess implements Action {
   readonly type = AUTH_SUCCESS;
@@ -43,5 +44,8 @@ export class RegisterStart implements Action {
   }
 }
 
+export class ClearError implements Action {
+  readonly type = CLEAR_ERROR;
+}
 
-export type AuthActions = AuthSuccess | Logout | LoginStart | AuthFail | RegisterStart;
+export type AuthActions = AuthSuccess | Logout | LoginStart | AuthFail | RegisterStart | ClearError;
