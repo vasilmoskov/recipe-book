@@ -51,26 +51,11 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
 
-    let authObs: Observable<AuthResponseData>;
-
     if (this.inLoginMode) {
       this.store.dispatch(new AuthActions.LoginStart({email, password}));
-      // authObs = this.authService.login(email, password);
     } else {
-      authObs= this.authService.register(email, password);
+      this.store.dispatch(new AuthActions.RegisterStart({email, password}));
     }
-
-    // authObs.subscribe({
-    //   next: respData => {
-    //     this.isLoading = false;
-    //     this.router.navigate(['/recipes']);
-    //   },
-    //   error: error => {
-    //     // this.error = error.message;
-    //     this.showErrorAlert(error.message);
-    //     this.isLoading = false;
-    //   }
-    // })
 
     authForm.reset();
   }
