@@ -2,8 +2,8 @@ import {Action} from "@ngrx/store";
 
 export const LOGIN_START = '[Auth] Login Start';
 export const REGISTER_START = '[Auth] Register Start';
-export const AUTH_SUCCESS = '[Auth] Success';
-export const AUTH_FAIL = '[Auth] Fail';
+export const AUTH_SUCCESS = '[Auth] Authentication Success';
+export const AUTH_FAIL = '[Auth] Authentication Fail';
 export const LOGOUT = '[Auth] Logout';
 export const CLEAR_ERROR = '[Auth] Clear error';
 export const AUTO_LOGIN = '[Auth] Auto login'
