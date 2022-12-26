@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
   recipes: Recipe[] = [];
-  recipesSubscription: Subscription;
+  // recipesSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -36,6 +36,6 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.recipesSubscription.unsubscribe();
+    // this.recipesSubscription.unsubscribe();
   }
 }
