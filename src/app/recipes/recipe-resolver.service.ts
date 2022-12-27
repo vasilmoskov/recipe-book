@@ -2,8 +2,6 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/r
 import { Recipe } from "./recipe.model";
 import { map, Observable, of, switchMap, take } from "rxjs";
 import { Injectable } from "@angular/core";
-import { DataStorageService } from "../shared/data-storage.service";
-import { RecipeService } from "./recipe.service";
 import { Store } from "@ngrx/store";
 
 import * as fromApp from "../store/app.reducer";
@@ -36,8 +34,5 @@ export class RecipeResolverService implements Resolve<Recipe[]> {
           }
         })
       )
-    
-
   }
-
 }
